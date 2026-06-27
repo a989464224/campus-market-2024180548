@@ -16,8 +16,6 @@ AI 输出；
 - AI 输出
 下面基于你上传的项目 `campus-market-seed` 做完整分析。
 
----
-
 # 一、项目目录结构分析
 
 项目整体是一个 **Vue 3 + Vite + TypeScript 的前端工程模板**，核心结构如下：
