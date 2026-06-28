@@ -55,7 +55,7 @@ const stats: StatItem[] = [
 .stat-card {
   background: #fff;
   border-radius: 12px;
-  border-top: 4px solid #667eea;
+  border-top: 4px solid #36dc7e;
   padding: 20px;
   text-align: center;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
@@ -76,7 +76,7 @@ const stats: StatItem[] = [
 
 .stat-label {
   font-size: 13px;
-  color: #999;
+  color: #37d07c;
   margin-top: 4px;
 }
 </style>

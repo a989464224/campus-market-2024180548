@@ -25,7 +25,7 @@ const goodsId = route.params.id as string
 .back-link {
   display: inline-block;
   font-size: 14px;
-  color: #667eea;
+  color: #38cd42;
   text-decoration: none;
   margin-bottom: 16px;
 }
@@ -38,7 +38,7 @@ const goodsId = route.params.id as string
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 16px;
-  color: #333;
+  color: #1dbe4d;
 }
 
 .detail-card {
@@ -50,12 +50,12 @@ const goodsId = route.params.id as string
 
 .detail-info {
   font-size: 16px;
-  color: #333;
+  color: #31b45c;
   margin-bottom: 8px;
 }
 
 .detail-hint {
   font-size: 13px;
-  color: #999;
+  color: #32bf6d;
 }
 </style>
