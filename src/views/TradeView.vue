@@ -110,7 +110,7 @@ function filterByTag(tag: string) {
 }
 
 .filter-tag.active {
-  background: #667eea;
+  background: #2dd679;
   color: #fff;
 }
 
@@ -137,7 +137,7 @@ function filterByTag(tag: string) {
 
 .tag {
   font-size: 11px;
-  color: #667eea;
+  color: #34df62;
   background: rgba(102, 126, 234, 0.1);
   padding: 2px 8px;
   border-radius: 4px;
