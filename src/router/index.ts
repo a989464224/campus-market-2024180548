@@ -10,8 +10,8 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/trade',
-      name: 'trade',
+      path: '/category',
+      name: 'category',
       component: () => import('@/views/TradeView.vue'),
     },
     {
@@ -30,6 +30,16 @@ const router = createRouter({
       component: () => import('@/views/ErrandView.vue'),
     },
     {
+      path: '/detail/:id',
+      name: 'detail',
+      component: () => import('@/views/DetailView.vue'),
+    },
+    {
+      path: '/list',
+      name: 'list',
+      component: () => import('@/views/ListView.vue'),
+    },
+    {
       path: '/publish',
       name: 'publish',
       component: () => import('@/views/PublishView.vue'),
@@ -40,9 +50,19 @@ const router = createRouter({
       component: () => import('@/views/MessageView.vue'),
     },
     {
+      path: '/profile',
+      name: 'profile',
+      component: () => import('@/views/ProfileView.vue'),
+    },
+    {
       path: '/user',
       name: 'user',
       component: () => import('@/views/UserView.vue'),
+    },
+    {
+      path: '/board',
+      name: 'board',
+      component: () => import('@/views/BoardView.vue'),
     },
   ],
 })

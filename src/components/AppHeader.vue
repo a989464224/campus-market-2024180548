@@ -4,41 +4,127 @@ import { computed } from 'vue'
 
 const route = useRoute()
 
-const pageTitleMap: Record<string, string> = {
-  '/': '🏫 校园二手市场',
-  '/trade': '🛒 二手交易',
-  '/lost-found': '🔍 失物招领',
-  '/group-buy': '👥 拼团',
-  '/errand': '🏃 跑腿',
-  '/publish': '📝 发布信息',
-  '/message': '💬 消息',
-  '/user': '🦲 个人中心',
-}
+const navItems = [
+  { path: '/', label: '首页' },
+  { path: '/category', label: '分类浏览' },
+  { path: '/publish', label: '发布信息' },
+  { path: '/message', label: '消息' },
+  { path: '/profile', label: '个人中心' },
+]
 
-const title = computed(() => pageTitleMap[route.path] || '校园二手市场')
+const isActive = (path: string) => {
+  if (path === '/') return route.path === '/'
+  return route.path.startsWith(path)
+}
 </script>
 
 <template>
   <header class="app-header">
-    <h1 class="app-title">{{ title }}</h1>
+    <div class="header-inner">
+      <router-link to="/" class="header-logo">
+        <span class="logo-icon">🏫</span>
+        <span class="logo-text">校园轻集市</span>
+      </router-link>
+
+      <nav class="header-nav">
+        <router-link
+          v-for="item in navItems"
+          :key="item.path"
+          :to="item.path"
+          class="nav-link"
+          :class="{ active: isActive(item.path) }"
+        >
+          {{ item.label }}
+        </router-link>
+      </nav>
+
+      <div class="header-actions">
+        <router-link to="/profile">
+          <el-button type="primary" size="small" round>个人中心</el-button>
+        </router-link>
+      </div>
+    </div>
   </header>
 </template>
 
 <style scoped>
 .app-header {
-  background: linear-gradient(135deg, #66eaaf 0%, #4ba26b 100%);
-  color: #fff;
-  text-align: center;
-  padding: 16px 0;
   position: sticky;
   top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  z-index: 1000;
+  background: var(--color-bg-white);
+  border-bottom: 1px solid var(--color-border);
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
 }
 
-.app-title {
+.header-inner {
+  max-width: var(--content-max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
   font-size: 18px;
-  font-weight: 600;
+}
+
+.logo-text {
   letter-spacing: 1px;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-link {
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-body);
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  background: var(--color-bg);
+  color: var(--color-primary);
+}
+
+.nav-link.active {
+  background: var(--color-primary-bg);
+  color: var(--color-primary);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 </style>

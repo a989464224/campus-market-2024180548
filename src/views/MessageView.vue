@@ -1,153 +1,76 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-interface MessageItem {
-  id: number
-  userName: string
-  avatar: string
-  lastMsg: string
-  time: string
-  unread: number
-}
+interface Msg { id: number; avatar: string; name: string; lastMsg: string; time: string; unread: number }
 
-const messages = ref<MessageItem[]>([
-  { id: 1, userName: '张三', avatar: '👨', lastMsg: '你好，这本书还在吗？', time: '10:30', unread: 2 },
-  { id: 2, userName: '李四', avatar: '👩', lastMsg: '好的，明天中午食堂见', time: '昨天', unread: 0 },
-  { id: 3, userName: '王五', avatar: '👦', lastMsg: '快递已经帮你取了', time: '昨天', unread: 0 },
-  { id: 4, userName: '系统通知', avatar: '📢', lastMsg: '您发布的"自行车"已通过审核', time: '周一', unread: 1 },
+const messages = ref<Msg[]>([
+  { id: 1, avatar: 'https://ui-avatars.com/api/?name=Li+TX&background=10B981&color=fff&size=96', name: '李同学', lastMsg: '键盘还在吗？最低多少钱出？', time: '5分钟前', unread: 2 },
+  { id: 2, avatar: 'https://ui-avatars.com/api/?name=Chen+TX&background=3B82F6&color=fff&size=96', name: '陈同学', lastMsg: '谢谢你！耳机我明天来拿', time: '1小时前', unread: 0 },
+  { id: 3, avatar: 'https://ui-avatars.com/api/?name=Liu+TX&background=F59E0B&color=fff&size=96', name: '刘同学', lastMsg: '好的，下午3点食堂见', time: '2小时前', unread: 1 },
+  { id: 4, avatar: 'https://ui-avatars.com/api/?name=Wu+TX&background=EF4444&color=fff&size=96', name: '吴同学', lastMsg: '快递已放到宿管处了，取件码发你了', time: '3小时前', unread: 0 },
+  { id: 5, avatar: 'https://ui-avatars.com/api/?name=Zhang+TX&background=8B5CF6&color=fff&size=96', name: '张同学', lastMsg: '请问书是第几版的？有笔记吗？', time: '昨天', unread: 3 },
+  { id: 6, avatar: 'https://ui-avatars.com/api/?name=Zhao+TX&background=EC4899&color=fff&size=96', name: '赵同学', lastMsg: '校园卡还在图书馆三楼', time: '昨天', unread: 0 },
+  { id: 7, avatar: 'https://ui-avatars.com/api/?name=Zhou+TX&background=14B8A6&color=fff&size=96', name: '周同学', lastMsg: '拼车还有位置吗？加我一个', time: '6月26日', unread: 0 },
+  { id: 8, avatar: 'https://ui-avatars.com/api/?name=Huang+TX&background=06B6D4&color=fff&size=96', name: '黄同学', lastMsg: '好的，谢谢告知', time: '6月25日', unread: 0 },
 ])
+
+const searchContact = ref('')
 </script>
 
 <template>
-  <div class="message-page">
-    <h2 class="page-title">💬 消息</h2>
+  <div class="msg-page">
+    <div class="page-header">
+      <h1 class="page-title">💬 消息</h1>
+      <p class="page-subtitle">与同学们保持沟通，及时回复消息</p>
+    </div>
 
-    <div class="message-list">
-      <div
-        v-for="msg in messages"
-        :key="msg.id"
-        class="message-item"
-        :class="{ unread: msg.unread > 0 }"
-      >
-        <span class="avatar">{{ msg.avatar }}</span>
-        <div class="message-content">
-          <div class="message-header">
-            <span class="user-name">{{ msg.userName }}</span>
-            <span class="message-time">{{ msg.time }}</span>
-          </div>
-          <p class="last-message">{{ msg.lastMsg }}</p>
+    <div class="msg-layout">
+      <div class="msg-sidebar">
+        <div class="msg-sidebar-header">
+          <h2>会话列表</h2>
+          <el-input v-model="searchContact" placeholder="搜索联系人..." size="default" clearable>
+            <template #prefix><el-icon><Search /></el-icon></template>
+          </el-input>
         </div>
-        <span v-if="msg.unread > 0" class="unread-badge">{{ msg.unread }}</span>
+        <div class="msg-list">
+          <div v-for="msg in messages" :key="msg.id" class="msg-item">
+            <img :src="msg.avatar" :alt="msg.name" class="msg-avatar" />
+            <div class="msg-content">
+              <div class="msg-name">{{ msg.name }}</div>
+              <div class="msg-preview">{{ msg.lastMsg }}</div>
+            </div>
+            <div class="msg-meta">
+              <div class="msg-time">{{ msg.time }}</div>
+              <span v-if="msg.unread > 0" class="msg-badge">{{ msg.unread }}</span>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div v-if="messages.length === 0" class="empty-tip">
-        暂无消息
+      <div class="msg-empty">
+        <div class="empty-icon">💬</div>
+        <div>选择一个会话开始聊天</div>
+        <div style="font-size:12px; color:#9CA3AF;">点击左侧会话列表查看消息详情</div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.message-page {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.page-title {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 16px;
-  color: #333;
-}
-
-.message-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.message-item {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px;
-  background: #fff;
-  border-bottom: 1px solid #f5f5f5;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.message-item:first-child {
-  border-radius: 12px 12px 0 0;
-}
-
-.message-item:last-child {
-  border-radius: 0 0 12px 12px;
-  border-bottom: none;
-}
-
-.message-item:hover {
-  background: #fafafa;
-}
-
-.message-item.unread {
-  background: #f8f9ff;
-}
-
-.avatar {
-  font-size: 36px;
-  flex-shrink: 0;
-}
-
-.message-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.message-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 4px;
-}
-
-.user-name {
-  font-size: 15px;
-  font-weight: 600;
-  color: #333;
-}
-
-.message-time {
-  font-size: 12px;
-  color: #bbb;
-}
-
-.last-message {
-  font-size: 13px;
-  color: #999;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.unread-badge {
-  background: #e74c3c;
-  color: #fff;
-  font-size: 11px;
-  min-width: 18px;
-  height: 18px;
-  border-radius: 9px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 5px;
-  flex-shrink: 0;
-}
-
-.empty-tip {
-  text-align: center;
-  padding: 60px;
-  color: #999;
-  font-size: 14px;
-  background: #fff;
-  border-radius: 12px;
-}
+.msg-page { /* full width */ }
+.msg-layout { display: flex; gap: 0; background: #fff; border-radius: 14px; box-shadow: var(--shadow-sm); overflow: hidden; min-height: 560px; }
+.msg-sidebar { width: 340px; border-right: 1px solid #F3F4F6; flex-shrink: 0; display: flex; flex-direction: column; }
+.msg-sidebar-header { padding: 16px 20px; border-bottom: 1px solid #F3F4F6; }
+.msg-sidebar-header h2 { font-size: 18px; font-weight: 700; color: var(--color-text-title); margin-bottom: 12px; }
+.msg-list { flex: 1; overflow-y: auto; }
+.msg-item { display: flex; gap: 12px; padding: 14px 20px; cursor: pointer; align-items: flex-start; border-bottom: 1px solid #F9FAFB; transition: background 0.15s; }
+.msg-item:hover { background: #F9FAFB; }
+.msg-avatar { width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0; object-fit: cover; }
+.msg-content { flex: 1; min-width: 0; }
+.msg-name { font-size: 14px; font-weight: 600; color: var(--color-text-title); margin-bottom: 2px; }
+.msg-preview { font-size: 12px; color: #9CA3AF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.msg-meta { text-align: right; flex-shrink: 0; }
+.msg-time { font-size: 11px; color: #9CA3AF; margin-bottom: 4px; }
+.msg-badge { display: inline-block; background: #EF4444; color: #fff; font-size: 11px; min-width: 18px; height: 18px; line-height: 18px; text-align: center; border-radius: 9px; padding: 0 5px; }
+.msg-empty { flex: 1; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #9CA3AF; }
+.empty-icon { font-size: 56px; margin-bottom: 12px; opacity: 0.4; }
 </style>

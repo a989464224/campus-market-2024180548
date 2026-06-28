@@ -1,4 +1,53 @@
-/* ===== 全局重置 ===== */
+/* ============================================
+   校园轻集市 - 全局样式
+   Campus Light Market - Global Styles (PC)
+   ============================================ */
+
+/* ----- CSS 变量 ----- */
+:root {
+  --color-primary: #10B981;
+  --color-primary-light: #34D399;
+  --color-primary-dark: #059669;
+  --color-primary-bg: #ECFDF5;
+  --color-primary-border: #A7F3D0;
+
+  --color-secondary: #3B82F6;
+  --color-secondary-bg: #EFF6FF;
+
+  --color-bg: #F5F7FA;
+  --color-bg-white: #FFFFFF;
+  --color-bg-card: #FFFFFF;
+  --color-bg-hover: #F9FAFB;
+
+  --color-success: #22C55E;
+  --color-success-bg: #F0FDF4;
+  --color-warning: #F59E0B;
+  --color-warning-bg: #FFFBEB;
+  --color-danger: #EF4444;
+  --color-danger-bg: #FEF2F2;
+
+  --color-text-title: #1F2937;
+  --color-text-body: #4B5563;
+  --color-text-secondary: #9CA3AF;
+  --color-text-placeholder: #D1D5DB;
+
+  --color-border: #E5E7EB;
+  --color-border-light: #F3F4F6;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --header-height: 64px;
+  --content-max-width: 1200px;
+  --sidebar-width: 320px;
+}
+
+/* ----- 全局重置 ----- */
 *,
 *::before,
 *::after {
@@ -8,13 +57,19 @@
 }
 
 html {
+  font-size: 16px;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-bg);
+  color: var(--color-text-body);
+  line-height: 1.6;
+  min-height: 100vh;
 }
 
 a {
@@ -22,11 +77,124 @@ a {
   text-decoration: none;
 }
 
-button {
-  font-family: inherit;
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
-input,
-textarea {
-  font-family: inherit;
+/* ----- 滚动条 ----- */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
+
+/* ----- Element Plus 主题覆盖 ----- */
+.el-button--primary {
+  --el-button-bg-color: var(--color-primary);
+  --el-button-border-color: var(--color-primary);
+  --el-button-hover-bg-color: var(--color-primary-dark);
+  --el-button-hover-border-color: var(--color-primary-dark);
+}
+.el-button--primary.is-plain {
+  --el-button-text-color: var(--color-primary);
+  --el-button-border-color: var(--color-primary);
+}
+.el-menu { border-right: none !important; }
+.el-card { border-radius: var(--radius-md) !important; }
+.el-tag { border-radius: var(--radius-sm) !important; }
+
+/* ----- 页面通用 ----- */
+.page-header {
+  margin-bottom: 24px;
+}
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text-title);
+  margin-bottom: 6px;
+}
+.page-subtitle {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+/* ----- 面包屑 ----- */
+.breadcrumb-nav {
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+.breadcrumb-nav a { color: var(--color-text-secondary); }
+.breadcrumb-nav a:hover { color: var(--color-primary); }
+.breadcrumb-nav .sep { margin: 0 8px; }
+.breadcrumb-nav .cur { color: var(--color-text-title); font-weight: 500; }
+
+/* ----- 卡片网格 ----- */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px; }
+.card-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.card-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+/* ----- 信息卡片 ----- */
+.info-card {
+  background: var(--color-bg-white);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border-light);
+  transition: all 0.25s;
+}
+.info-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* ----- 详情页布局 ----- */
+.detail-layout {
+  display: flex;
+  gap: 24px;
+}
+.detail-main {
+  flex: 1;
+  min-width: 0;
+}
+.detail-sidebar {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+}
+
+/* ----- 管理端布局 ----- */
+.admin-layout-main {
+  display: flex;
+  gap: 24px;
+}
+.admin-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--color-bg-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: 8px 0;
+}
+.admin-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ----- 空状态 ----- */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--color-text-secondary);
+}
+.empty-state .icon { font-size: 56px; margin-bottom: 12px; opacity: 0.5; }
+
+/* ----- 加载更多 ----- */
+.load-more {
+  text-align: center;
+  margin-top: 24px;
+}
+.pagination-center {
+  margin-top: 24px;
+  justify-content: center;
 }
