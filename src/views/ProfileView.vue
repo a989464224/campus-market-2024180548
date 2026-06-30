@@ -1,7 +1,30 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { getTrades } from '@/api/trade'
+import { getLostFounds } from '@/api/lostFound'
+import { getGroupBuys } from '@/api/groupBuy'
+import { getErrands } from '@/api/errand'
 
-const stats = ref({ posts: 12, favs: 28, score: 96 })
+const stats = ref({ posts: 0, favs: 28, score: 96 })
+
+onMounted(async () => {
+  try {
+    const [tRes, lRes, gRes, eRes] = await Promise.allSettled([
+      getTrades(),
+      getLostFounds(),
+      getGroupBuys(),
+      getErrands(),
+    ])
+    let total = 0
+    if (tRes.status === 'fulfilled') total += tRes.value.data.length
+    if (lRes.status === 'fulfilled') total += lRes.value.data.length
+    if (gRes.status === 'fulfilled') total += gRes.value.data.length
+    if (eRes.status === 'fulfilled') total += eRes.value.data.length
+    stats.value.posts = total
+  } catch {
+    // keep default on failure
+  }
+})
 
 const activities = [
   { text: '你发布了二手商品"机械键盘 IKBC C87 青轴"', time: '2小时前', dot: 'active' },

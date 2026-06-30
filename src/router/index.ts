@@ -15,6 +15,11 @@ const router = createRouter({
       component: () => import('@/views/TradeView.vue'),
     },
     {
+      path: '/trade',
+      name: 'trade',
+      component: () => import('@/views/TradeView.vue'),
+    },
+    {
       path: '/lost-found',
       name: 'lost-found',
       component: () => import('@/views/LostFoundView.vue'),
