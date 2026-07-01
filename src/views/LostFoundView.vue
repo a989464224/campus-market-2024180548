@@ -2,9 +2,11 @@
 import { onMounted, ref } from 'vue'
 import ItemCard from '@/components/ItemCard.vue'
 import EmptyState from '@/components/EmptyState.vue'
+import { useFavoriteStore } from '@/stores/favorite'
 import { getLostFounds, type LostFoundItem } from '@/api/lostFound'
 
 const items = ref<LostFoundItem[]>([])
+const favoriteStore = useFavoriteStore()
 
 onMounted(async () => {
   try {
@@ -44,6 +46,15 @@ onMounted(async () => {
           <span class="status-tag" :class="item.status">
             {{ item.status === 'open' ? '进行中' : item.status === 'closed' ? '已结束' : '已完成' }}
           </span>
+          <button class="favorite-btn" @click="favoriteStore.toggleFavorite({
+            id: item.id,
+            type: 'lostFound',
+            title: item.title,
+            description: item.description,
+            location: item.location
+          })">
+            {{ favoriteStore.isFavorite('lostFound', item.id) ? '已收藏' : '收藏' }}
+          </button>
         </template>
       </ItemCard>
     </div>
@@ -109,5 +120,15 @@ onMounted(async () => {
 .status-tag.done {
   background: #f0fdf4;
   color: #16a34a;
+}
+
+.favorite-btn {
+  margin-left: 12px;
+  border: none;
+  border-radius: 999px;
+  padding: 6px 12px;
+  cursor: pointer;
+  background: #f3f4f6;
+  color: #374151;
 }
 </style>

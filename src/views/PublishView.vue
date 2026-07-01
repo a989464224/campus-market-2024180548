@@ -3,6 +3,7 @@ import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import FormField from '../components/FormField.vue'
+import { useUserStore } from '../stores/user'
 import { createTrade } from '../api/trade'
 import { createLostFound } from '../api/lostFound'
 import { createGroupBuy } from '../api/groupBuy'
@@ -11,6 +12,7 @@ import { createErrand } from '../api/errand'
 type PublishType = 'trade' | 'lostFound' | 'groupBuy' | 'errand'
 
 const router = useRouter()
+const userStore = useUserStore()
 const publishType = ref<PublishType>('trade')
 const submitting = ref(false)
 
@@ -130,7 +132,7 @@ async function handleSubmit() {
         price: form.price,
         condition: form.condition,
         location: form.location,
-        publisher: '当前用户',
+        publisher: userStore.displayName,
         publishTime: getCurrentTime(),
         image: '',
         status: 'open',
@@ -165,7 +167,7 @@ async function handleSubmit() {
         currentCount: 1,
         deadline: form.deadline,
         location: form.location,
-        publisher: '当前用户',
+        publisher: userStore.displayName,
         status: 'open',
         description: form.description,
       })
@@ -182,7 +184,7 @@ async function handleSubmit() {
         from: form.from,
         to: form.to,
         deadline: form.deadline,
-        publisher: '当前用户',
+        publisher: userStore.displayName,
         status: 'open',
         description: form.description,
       })

@@ -2,9 +2,11 @@
 import { onMounted, ref } from 'vue'
 import ItemCard from '@/components/ItemCard.vue'
 import EmptyState from '@/components/EmptyState.vue'
+import { useFavoriteStore } from '@/stores/favorite'
 import { getErrands, type ErrandItem } from '@/api/errand'
 
 const errands = ref<ErrandItem[]>([])
+const favoriteStore = useFavoriteStore()
 
 onMounted(async () => {
   try {
@@ -44,6 +46,15 @@ onMounted(async () => {
           <span class="status-tag" :class="item.status">
             {{ item.status === 'open' ? '待接单' : item.status === 'taken' ? '已接单' : '已完成' }}
           </span>
+          <button class="favorite-btn" @click="favoriteStore.toggleFavorite({
+            id: item.id,
+            type: 'errand',
+            title: item.title,
+            description: item.description,
+            location: `${item.from} → ${item.to}`
+          })">
+            {{ favoriteStore.isFavorite('errand', item.id) ? '已收藏' : '收藏' }}
+          </button>
         </template>
       </ItemCard>
     </div>
@@ -110,5 +121,15 @@ onMounted(async () => {
 .status-tag.done {
   background: #f3f4f6;
   color: #9ca3af;
+}
+
+.favorite-btn {
+  margin-left: 12px;
+  border: none;
+  border-radius: 999px;
+  padding: 6px 12px;
+  cursor: pointer;
+  background: #f3f4f6;
+  color: #374151;
 }
 </style>

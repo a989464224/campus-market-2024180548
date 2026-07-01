@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import { computed } from 'vue'
+import { useUserStore } from '../stores/user'
 
 const route = useRoute()
+const userStore = useUserStore()
 
 const navItems = [
   { path: '/', label: '首页' },
@@ -39,8 +40,8 @@ const isActive = (path: string) => {
       </nav>
 
       <div class="header-actions">
-        <router-link to="/profile">
-          <el-button type="primary" size="small" round>个人中心</el-button>
+        <router-link to="/profile" class="user-mini">
+          <span>{{ userStore.displayName }}</span>
         </router-link>
       </div>
     </div>
@@ -126,5 +127,19 @@ const isActive = (path: string) => {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.user-mini {
+  font-size: 14px;
+  color: #374151;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s;
+}
+
+.user-mini:hover {
+  background: var(--color-bg);
 }
 </style>

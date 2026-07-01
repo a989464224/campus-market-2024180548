@@ -24,6 +24,19 @@ const searchContact = ref('')
       <p class="page-subtitle">与同学们保持沟通，及时回复消息</p>
     </div>
 
+    <!-- 系统通知 -->
+    <div class="message-list">
+      <article class="message-card">
+        <h3>欢迎使用校园轻集市</h3>
+        <p>你可以在这里发布二手商品、失物招领、拼单搭子和跑腿委托。</p>
+      </article>
+
+      <article class="message-card">
+        <h3>功能提示</h3>
+        <p>收藏的信息可以在个人中心中查看。</p>
+      </article>
+    </div>
+
     <div class="msg-layout">
       <div class="msg-sidebar">
         <div class="msg-sidebar-header">
@@ -57,6 +70,35 @@ const searchContact = ref('')
 
 <style scoped>
 .msg-page { /* full width */ }
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.message-card {
+  padding: 18px 24px;
+  border-radius: 12px;
+  background: #fff;
+  border-left: 4px solid var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.message-card h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-title);
+  margin: 0 0 4px;
+}
+
+.message-card p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
 .msg-layout { display: flex; gap: 0; background: #fff; border-radius: 14px; box-shadow: var(--shadow-sm); overflow: hidden; min-height: 560px; }
 .msg-sidebar { width: 340px; border-right: 1px solid #F3F4F6; flex-shrink: 0; display: flex; flex-direction: column; }
 .msg-sidebar-header { padding: 16px 20px; border-bottom: 1px solid #F3F4F6; }

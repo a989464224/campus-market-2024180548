@@ -2,9 +2,11 @@
 import { onMounted, ref } from 'vue'
 import ItemCard from '@/components/ItemCard.vue'
 import EmptyState from '@/components/EmptyState.vue'
+import { useFavoriteStore } from '@/stores/favorite'
 import { getGroupBuys, type GroupBuyItem } from '@/api/groupBuy'
 
 const groups = ref<GroupBuyItem[]>([])
+const favoriteStore = useFavoriteStore()
 
 onMounted(async () => {
   try {
@@ -51,6 +53,15 @@ function progressPercent(item: GroupBuyItem): number {
             <span class="status-tag" :class="item.status">
               {{ item.status === 'open' ? '拼单中' : item.status === 'closed' ? '已截止' : '已完成' }}
             </span>
+            <button class="favorite-btn" @click="favoriteStore.toggleFavorite({
+              id: item.id,
+              type: 'groupBuy',
+              title: item.title,
+              description: item.description,
+              location: item.location
+            })">
+              {{ favoriteStore.isFavorite('groupBuy', item.id) ? '已收藏' : '收藏' }}
+            </button>
           </div>
         </template>
       </ItemCard>
@@ -135,5 +146,17 @@ function progressPercent(item: GroupBuyItem): number {
 .status-tag.done {
   background: #f0fdf4;
   color: #16a34a;
+}
+
+.favorite-btn {
+  margin-left: 8px;
+  border: none;
+  border-radius: 999px;
+  padding: 4px 10px;
+  cursor: pointer;
+  background: #f3f4f6;
+  color: #374151;
+  font-size: 12px;
+  white-space: nowrap;
 }
 </style>
